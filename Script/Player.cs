@@ -25,14 +25,28 @@ public class Player : MonoBehaviour
     private float speed = 5f;
     private CharacterController controller; 
 
+    public int score ; 
+        Vector3 velocity;
 
      void OnTriggerEnter(Collider other) {
-        Debug.Log("Test");
+        // Debug.Log("Test");
+        if (other.CompareTag("Bronze")){
+            other.transform.position = new Vector3(Random.Range(0f,100f),1.771f,Random.Range(0f,100f));
+            score-=1;
+        }else if(other.CompareTag("Silver")){
+            other.transform.position = new Vector3(Random.Range(0f,100f),1.771f,Random.Range(0f,100f));
+
+            score+=1;
+        }else{
+            other.transform.position = new Vector3(Random.Range(0f,100f),1.771f,Random.Range(0f,100f));
+
+            score+=3;
+        }
     }
     
-    Vector3 velocity;
     void Start()
     {
+        score = 0;
         controller = GetComponent<CharacterController>();
     }
 
