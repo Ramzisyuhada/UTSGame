@@ -21,42 +21,47 @@ public class Player : MonoBehaviour
     [SerializeField] private float zoomSpeed = 2f; 
     [SerializeField] private float minZoomDistance = 2f; 
     [SerializeField] private float maxZoomDistance = 10f; 
+
     [Header("Controller Player")]
+    [SerializeField] private Health Darah ;
     private float speed = 5f;
+    private int Currenthealth;
     private CharacterController controller; 
 
+    
     public int score ; 
-        Vector3 velocity;
+    Vector3 velocity;
 
      void OnTriggerEnter(Collider other) {
         // Debug.Log("Test");
         if (other.CompareTag("Bronze")){
             other.transform.position = new Vector3(Random.Range(0f,100f),1.771f,Random.Range(0f,100f));
             score-=1;
+            Currenthealth = Darah.Takedamage(Currenthealth);
         }else if(other.CompareTag("Silver")){
             other.transform.position = new Vector3(Random.Range(0f,100f),1.771f,Random.Range(0f,100f));
 
             score+=1;
         }else{
             other.transform.position = new Vector3(Random.Range(0f,100f),1.771f,Random.Range(0f,100f));
-
+            Currenthealth = Darah.Regen(Currenthealth);
             score+=3;
         }
     }
     
     void Start()
     {
+        Currenthealth = 100;
+        Darah.Setmaxhealth(Currenthealth);
         score = 0;
         controller = GetComponent<CharacterController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
       Jalan();
       gravity();
       Loncat();
-    //   ZoomCamera();
     }
 
     void Loncat(){
